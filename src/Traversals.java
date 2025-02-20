@@ -53,7 +53,7 @@ public class Traversals {
     if (node == null) return 0;
 
     int count = 0;
-    
+
     if (node.left != null || node.right != null) {
       count++;
     }
@@ -74,7 +74,24 @@ public class Traversals {
    * @return a post-order traversal string, or an empty string if the tree is null
    */
   public static <T> String buildPostOrderString(TreeNode<T> node) {
-    return null;
+    /*
+    if node is null return ""
+    create result string variable
+    traverse in post order
+    recursively visit left and right subtrees while concatenating node.value
+     */
+
+    if (node == null) {
+      return "";
+    }
+
+    String result = "";
+
+    result += buildPostOrderString(node.left);
+    result += buildPostOrderString(node.right);
+    result += node.value;
+
+    return result;
   }
 
   /**
@@ -86,7 +103,33 @@ public class Traversals {
    * @return a list of node values in a top-to-bottom order, or an empty list if the tree is null
    */
   public static <T> List<T> collectLevelOrderValues(TreeNode<T> node) {
-    return null;
+    /*
+    create a list for results
+    create a queue and add node
+    if node is null return empty list
+    while in queue isnt empty
+      dequeue node
+      add node value to result list
+      enqueue left child if it exists
+      enqueue right child if it exists
+     */
+
+    List<T> list = new ArrayList<>();
+
+    if (node == null) return list;
+
+    Queue<TreeNode<T>> queue = new LinkedList<>();
+    queue.add(node);
+
+    while (!queue.isEmpty()) {
+      TreeNode<T> current = queue.poll();
+      list.add(current.value);
+
+      if (current.left != null) queue.add(current.left);
+      if (current.right != null) queue.add(current.right);
+    }
+
+    return list;
   }
 
   /**
@@ -97,7 +140,33 @@ public class Traversals {
    * @return the number of unique values in the tree, or 0 if the tree is null
    */
   public static int countDistinctValues(TreeNode<Integer> node) {
-    return 0;
+    /*
+    if node is null return 0
+    create a hashlist
+    create a queue for traversal
+    while in queue isnt empty
+      dequeue node
+      add node value to hashlist
+      enqueue left child if it exists
+      enqueue right child if it exists
+    return hashlist size
+     */
+
+    if (node == null) return 0;
+
+    Set<Integer> uniqueValues = new HashSet<>();
+    Queue<TreeNode<Integer>> queue = new LinkedList<>();
+    queue.add(node);
+
+    while (!queue.isEmpty()) {
+      TreeNode<Integer> current = queue.poll();
+      uniqueValues.add(current.value);
+
+      if (current.left != null) queue.add(current.left);
+      if (current.right != null) queue.add(current.right);
+    }
+
+    return uniqueValues.size();
   }
 
   /**
